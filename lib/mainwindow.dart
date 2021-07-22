@@ -2,44 +2,122 @@ import 'package:flutter/material.dart';
 
 class MainWindow extends StatelessWidget {
   MainWindow({Key? key}) : super(key: key);
-
+  var infoList = <TextInfo>[
+    TextInfo('+998901234567', 'press to change the number'),
+    TextInfo('@hello_123', 'Username'),
+    TextInfo('About yourself', 'write something about yourself'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 59, 105, 1),
       body: SafeArea(
-        child: Container(
-          height: 180,
-          color: Color.fromRGBO(2, 67, 117, 1),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  HighIcons(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  CenterLine(),
-                ],
-              ),
-              Positioned(
-                bottom: 10,
-                right: 30,
-                child: CircleAvatar(
-                  backgroundColor: Colors.blue[500],
-                  radius: 31,
-                  child: Icon(
-                    Icons.add_a_photo_outlined,
-                    size: 30,
+        child: Column(
+          children: [
+            HeadBar(),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  'Account',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 21,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            ColumnClass(infoList: infoList),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class TextInfo {
+  String head, body;
+  TextInfo(this.head, this.body);
+}
+
+class ColumnClass extends StatelessWidget {
+  var infoList = <TextInfo>[];
+  ColumnClass({Key? key, required this.infoList}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: infoList.map((e) => InfoAboutUser(info: e)).toList(),
+    );
+  }
+}
+
+class InfoAboutUser extends StatelessWidget {
+  TextInfo info;
+  InfoAboutUser({Key? key, required this.info}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 380,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            info.head,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            info.body,
+            style: TextStyle(color: Colors.grey, fontSize: 18),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            height: 2,
+            color: Colors.black,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class HeadBar extends StatelessWidget {
+  const HeadBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 180,
+      color: Color.fromRGBO(2, 67, 117, 1),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          HighIcons(),
+          SizedBox(
+            height: 15,
+          ),
+          CenterLine(),
+        ],
       ),
     );
   }
@@ -58,11 +136,11 @@ class CenterLine extends StatelessWidget {
           width: 20,
         ),
         CircleAvatar(
-          radius: 40,
-          backgroundColor: Colors.grey,
+          radius: 45,
+          backgroundImage: AssetImage('images/Diyor.jpg'),
         ),
         SizedBox(
-          width: 20,
+          width: 23,
         ),
         Container(
           height: 80,
